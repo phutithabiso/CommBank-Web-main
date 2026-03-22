@@ -22,6 +22,7 @@ export function GoalManager(props: Props) {
   const dispatch = useAppDispatch()
 
   const goal = useAppSelector(selectGoalsMap)[props.goal.id]
+  
 
   const [name, setName] = useState<string | null>(null)
   const [targetDate, setTargetDate] = useState<Date | null>(null)
@@ -118,7 +119,7 @@ const pickEmojiOnClick = (emoji: BaseEmoji, event: React.MouseEvent) => {
 
     <GoalManagerContainer>
       <NameInput value={name ?? ''} onChange={updateNameOnChange} />
-
+      
       <Group>
         <Field name="Target Date" icon={faCalendarAlt} />
         <Value>
@@ -154,11 +155,16 @@ const pickEmojiOnClick = (emoji: BaseEmoji, event: React.MouseEvent) => {
       </TransparentButton>
     </AddIconButtonContainer>
 
+       <GoalIconContainer shouldShow={hasIcon()}>
+      <GoalIcon icon={goal.icon} onClick={addIconOnClick} />
+    </GoalIconContainer>
+
     <EmojiPickerContainer
       isOpen={emojiPickerIsOpen}
       hasIcon={hasIcon()}
       onClick={(event) => event.stopPropagation()}
     >
+      {/* <EmojiPicker onClick={pickEmojiOnClick} /> */}
       <EmojiPicker onClick={pickEmojiOnClick} />
     </EmojiPickerContainer>
 
@@ -169,8 +175,10 @@ const pickEmojiOnClick = (emoji: BaseEmoji, event: React.MouseEvent) => {
 
 type FieldProps = { name: string; icon: IconDefinition }
 //type AddIconButtonContainerProps = { shouldShow: boolean }
-//type GoalIconContainerProps = { shouldShow: boolean }
+type GoalIconContainerProps = { shouldShow: boolean }
 type EmojiPickerContainerProps = { isOpen: boolean; hasIcon: boolean }
+
+
 
 
 
@@ -181,6 +189,7 @@ const Field = (props: FieldProps) => (
     <FieldName>{props.name}</FieldName>
   </FieldContainer>
 )
+
 
 const EmojiPickerContainer = styled.div<EmojiPickerContainerProps>`
   display: ${(props) => (props.isOpen ? 'flex' : 'none')};
@@ -197,7 +206,7 @@ const GoalManagerContainer = styled.div`
   width: 100%;
   position: relative;
 `
-
+ 
 const Group = styled.div`
   display: flex;
   flex-direction: row;
@@ -274,4 +283,15 @@ const TransparentButton = styled.button`
 const AddIconButtonText = styled.span`
   margin-top: 0.5rem;
   font-size: 1rem;
+`
+
+const GoalIconContainer = styled.div<GoalIconContainerProps>`
+  display: ${(props) => (props.shouldShow ? 'flex' : 'none')};
+  margin-top: 1.25rem;
+`
+
+type GoalIconProps = { icon: string | null }
+
+const GoalIcon = styled.div<GoalIconProps>`
+  font-size: 3rem;
 `

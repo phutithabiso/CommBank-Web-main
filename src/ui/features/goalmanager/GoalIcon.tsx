@@ -10,6 +10,7 @@ export default function GoalIcon(props: Props) {
     <TransparentButton onClick={props.onClick}>
       <Icon>{props.icon}</Icon>
     </TransparentButton>
+    
   )
 }
 
