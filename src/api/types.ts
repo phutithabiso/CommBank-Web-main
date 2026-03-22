@@ -66,3 +66,9 @@ export enum ApplicationStatus {
 
 export type ModalContent = Goal
 export type ModalType = 'Goal'
+
+export interface Goal {
+  // ...
+
+  icon: string | null
+}
